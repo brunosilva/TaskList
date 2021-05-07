@@ -3,6 +3,7 @@ import { useState } from 'react'
 import '../styles/tasklist.scss'
 
 import { FiTrash, FiCheckSquare } from 'react-icons/fi'
+import React from 'react';
 
 interface Task {
   id: number;
@@ -13,17 +14,45 @@ interface Task {
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [isNull, setIsNull] = useState(false);
 
-  function handleCreateNewTask() {
+  function handleCreateNewTask() {    
     // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+
+    var min = 1;
+    var max = 100;
+ 
+    if(newTaskTitle){
+      const newTask = {
+        id: Math.floor(min + (Math.random() * (max-min))),
+        title: newTaskTitle,
+        isComplete: false,
+      }
+
+      setTasks(oldState => [...oldState, newTask]);
+      setNewTaskTitle('');
+
+    } else {
+      setIsNull(true);
+    }
   }
 
   function handleToggleTaskCompletion(id: number) {
     // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
+
+    const checkTask = tasks.map(task => task.id === id ? {
+      ...task,
+      isComplete: !task.isComplete
+    } : task);
+
+    setTasks(checkTask);
   }
 
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
+
+    const filteredTask = tasks.filter(task => task.id !== id);
+    setTasks(filteredTask);
   }
 
   return (
@@ -34,6 +63,7 @@ export function TaskList() {
         <div className="input-group">
           <input 
             type="text" 
+            required
             placeholder="Adicionar novo todo" 
             onChange={(e) => setNewTaskTitle(e.target.value)}
             value={newTaskTitle}
@@ -43,7 +73,14 @@ export function TaskList() {
           </button>
         </div>
       </header>
-
+        { isNull ? (
+          <div className="message-error close">
+            <span>Input vazio</span>
+          </div>
+        ) : (
+          <div></div>
+        )}
+          
       <main>
         <ul>
           {tasks.map(task => (

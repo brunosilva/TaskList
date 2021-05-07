@@ -61,6 +61,46 @@ section.task-list {
     }
   }
 
+  .message-error{
+    width:100%;
+    padding:10px;
+
+    display: flex;
+    justify-content:center;
+    align-items:center;
+
+    background: rgba(236, 39, 4, 0.7);
+    border: 1px solid #f00;
+    border-radius:4px;
+    opacity: 0.8;
+
+
+    span{
+      color:#fff;
+      font-weight: 600;
+    }
+  }
+
+  .message-success{
+    width:100%;
+    padding:10px;
+
+    display: flex;
+    justify-content:center;
+    align-items:center;
+
+    background: rgba(4, 236, 81, 0.7);
+    border: 1px solid rgb(3, 141, 49);
+    border-radius:4px;
+    opacity: 0.8;
+
+    span{
+      color:#fff;
+      font-weight: 600;
+    }
+
+  }
+
   main {
     margin-top: 3rem;
 
